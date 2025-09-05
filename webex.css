@@ -2,5 +2,5 @@ body {
   background-image: url('./assets/webex-wallpaper.png');
   background-position: center;
   background-size: cover;
-  color: white;
+  color: rgb(255, 255, 255);
 }
