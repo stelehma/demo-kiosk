@@ -25,42 +25,43 @@
     </div>
   </header>
   <main x-show="page === 'home'">
-    <h1>Welcome</h1>
-    <div>Visitor please select an action below.</div>
+    <h1>Herzlich Willkommen</h1>
+    <div>Digitaler Besucher Anmeldekiosk</div>
+    <div>Bitte wählen Sie eine Aktion.</div>
     <form class="select-action" @submit.prevent="">
       <div class="action">
-        <button @click="checkOut()" class="secondary">Check out</button>
-        <button @click="next()" class="primary">Check in</button>
+        <button @click="checkOut()" class="secondary">Abmelden</button>
+        <button @click="next()" class="primary">Anmelden</button>
       </div>
     </form>
     <div class="mini-apps">
-      <button class="call" @click="call()">Call Reception</button>
-      <button class="taxi" @click="page = 'taxi'">Taxi</button>
-      <button class="map" @click="page = 'map'">Map</button>
+      <button class="call" @click="call()">Anruf Helpdesk</button>
+      <button class="taxi" @click="page = 'taxi'">Taxi bestellen</button>
+      <button class="map" @click="page = 'map'">Wo bin ich?</button>
     </div>
   </main>
   <main x-show="page === 'checkIn'">
-    <h1>Check in</h1>
-    <div>Please enter your name and email below.</div>
+    <h1>Anmelden</h1>
+    <div>Bitte geben Sie Ihren Namen und email Adresse ein.</div>
     <form class="check-in" @submit.prevent="">
       <div>
-        <input placeholder="Full name" id="name" x-model="name" />
+        <input placeholder="Vollstaendiger Name" id="name" x-model="name" />
       </div>
       <div>
-        <input placeholder="Your email address" x-model="email" @keydown.enter.prevent="if (validForm) next()"/>
+        <input placeholder="Ihre email Adresse" x-model="email" @keydown.enter.prevent="if (validForm) next()"/>
       </div>
       <div class="action">
-        <button @click="home()" class="secondary">Back</button>
-        <button @click="next()" :disabled="!validForm" class="primary">Continue</button>
+        <button @click="home()" class="secondary">Zurück</button>
+        <button @click="next()" :disabled="!validForm" class="primary">Weiter</button>
       </div>
     </form>
   </main>
   <main x-show="page === 'findHost'">
-    <h1>Find your host</h1>
-    <div x-show="!currentHost">Please enter the name of your host.</div>
+    <h1>Finden Sie Ihren Gastgeber im Verzeichnis</h1>
+    <div x-show="!currentHost">Bitte geben Sie den Namen Ihres Gastgebers ein.</div>
     <form class="check-in" @submit.prevent="">
       <div>
-        <input placeholder="Host name" id="host" x-model="hostSearch" @input="searchHost()" />
+        <input placeholder="Gastgeber" id="host" x-model="hostSearch" @input="searchHost()" />
       </div>
       <div class="help" x-text="searchStatus"></div>
       <div class="found-hosts" x-show="foundHosts.length">
@@ -72,23 +73,23 @@
         </template>
       </div>
       <div class="action">
-        <button @click="back()" class="secondary">Back</button>
+        <button @click="back()" class="secondary">Zurück</button>
       </div>
     </form>
   </main>
   <main x-show="page === 'confirmHost'">
-    <h1>Selected Host</h1>
+    <h1>Gewählter Gastgeber</h1>
     <div class="selected-host" x-show="currentHost">
       <div class="avatar" :style="getAvatar(currentHost)"></div>
       <div class="name" x-text="currentHost && currentHost.displayName"></div>
     </div>
     <div class="action">
-      <button @click="back()" class="secondary">Back</button>
-      <button :disabled="!currentHost" @click="next()" class="primary">Continue</button>
+      <button @click="back()" class="secondary">Zurück</button>
+      <button :disabled="!currentHost" @click="next()" class="primary">Weiter</button>
     </div>
   </main>
   <main x-show="page === 'photo'">
-    <h1>Take a photo</h1>
+    <h1>Foto aufnehmen</h1>
     <div class="box">
       <video class="webcam" x-show="!photo" autoplay></video>
       <canvas class="photo" x-show="photo"></canvas>
@@ -96,40 +97,40 @@
       <div class="photo-flash"></div>
     </div>
     <div class="action">
-      <button :disabled="photoTime > 0" @click="back()" class="secondary">Back</button>
-      <button :disabled="photoTime > 0" @click="takePhotoCountdown()" class="primary" x-show="!photo">Take photo</button>
-      <button @click="takePhotoCountdown()" x-show="photo">Re-take</button>
-      <button :disabled="photoTime > 0" @click="next()" x-show="photo" class="primary">Next</button>
+      <button :disabled="photoTime > 0" @click="back()" class="secondary">Zurück</button>
+      <button :disabled="photoTime > 0" @click="takePhotoCountdown()" class="primary" x-show="!photo">Foto aufnehmen</button>
+      <button @click="takePhotoCountdown()" x-show="photo">Wiederholen</button>
+      <button :disabled="photoTime > 0" @click="next()" x-show="photo" class="primary">Weiter</button>
       <br/>
-      <button @click="next()" class="link">Skip photo</button>
+      <button @click="next()" class="link">Foto überspringen</button>
     </div>
     <audio src="assets/shutter.mp3" id="shutter-sound"></audio>
   </main>
   <main x-show="page === 'confirm'">
-    <h1>Confirm details</h1>
+    <h1>Bestätigen und Registrierung abschliessen</h1>
 
     <div class="business-card">
       <img class="photo" :src="photoSrc()" />
       <div class="name" x-text="name"></div>
       <div class="email" x-text="email"></div>
-      <div class="visiting">Visiting:
+      <div class="visiting">Zu Besuch bei:
         <span x-text="currentHost && currentHost.displayName"></span>
       </div>
     </div>
     <div class="action">
-      <button @click="back()" class="secondary">Back</button>
-      <button @click="next()" :disabled="!validForm" class="primary">Register</button>
+      <button @click="back()" class="secondary">Zurück</button>
+      <button @click="next()" :disabled="!validForm" class="primary">Registrierung abschliessen</button>
     </div>
   </main>
   <main x-show="page === 'registered'">
-    <h1>Welcome <span x-text="name"></span></h1>
-    <div>Your badge is printing. Please wear it during your stay.
+    <h1>Wilkommen <p/> <span x-text="name"></span></h1>
+    <div>Ihr Besucherausweis wird gedruckt, bitte sichtbar tragen.
     <p/>
-    We sent a message to
+    Wir haben 
       <span x-text="currentHost && currentHost.displayName"></span>
-      that you have arrived.
+      informiert, dass Sie angekommen sind.
     <p/>
-    Grab a coffee or have yourself a drink while you wait.</div>
+    Bedienen Sie sich am Getränkestand, während Sie warten.</div>
     <form class="registered" @submit.prevent="">
       <div class="action">
         <button @click="home()" class="primary">OK</button>
@@ -137,54 +138,54 @@
     </form>
   </main>
   <main x-show="page === 'checkOut'">
-    <h1>Check out</h1>
-    <div>Enter your email to check out.</div>
+    <h1>Abmelden</h1>
+    <div>Bitte geben Sie Ihre email an.</div>
     <form @submit.prevent="">
       <div>
         <input placeholder="Email address" x-model="email" @keydown.enter.prevent="if (validForm) next()"/>
       </div>
       <div class="action">
-        <button @click="home()" class="secondary">Back</button>
-        <button @click="next()" :disabled="!validForm" class="primary">Continue</button>
+        <button @click="home()" class="secondary">Zurück</button>
+        <button @click="next()" :disabled="!validForm" class="primary">Weiter</button>
       </div>
     </form>
   </main>
   <main x-show="page === 'taxi'">
-    <h1>Call Taxi</h1>
-    <div>Enter your phone number, so the taxi can call you when it arrives.</div>
+    <h1>Taxi rufen</h1>
+    <div>Geben Sie Ihre Rückrufnummer an, damit der Fahrer Sie erreichen kann.</div>
     <form @submit.prevent="">
       <div>
         <input
-          placeholder="Your phone number"
+          placeholder="Ihre Telefonnummer"
           x-model="phoneNumber"
           @keydown.enter.prevent="if (validForm) next()"
         />
       </div>
       <div class="action">
-        <button @click="home()" class="secondary">Back</button>
-        <button @click="next()" :disabled="!validForm" class="primary">Continue</button>
+        <button @click="home()" class="secondary">Zurück</button>
+        <button @click="next()" :disabled="!validForm" class="primary">Weiter</button>
       </div>
     </form>
   </main>
   <main x-show="page === 'taxiConfirmed'">
-    <h1>Taxi ordered</h1>
-    <div>It will call your phone when it arrives.</div>
+    <h1>Taxi unterwegs</h1>
+    <div>Sie werden bei Ankuft angerufen.</div>
     <div>
       Taxi number: <span x-text="taxiNumber"></span>
     </div>
     <div class="action">
-      <button @click="home()" class="primary">Done</button>
+      <button @click="home()" class="primary">Abgeschlossen</button>
     </div>
   </main>
   <main x-show="page === 'checkOutResult'">
-    <h1>Checked out</h1>
-    <div>You were checked out. See you soon!</div>
+    <h1>Abgemeldet</h1>
+    <div>Sie sind abgemeldet, Vielen Dank für Ihren Besuch!</div>
     <div class="action">
-      <button @click="home()" :disabled="!validForm" class="primary">Continue</button>
+      <button @click="home()" :disabled="!validForm" class="primary">Weiter</button>
     </div>
   </main>
   <main x-show="page === 'map'">
-    <h1>Area map</h1>
+    <h1>Umgebungskarte</h1>
     <iframe
       :src="mapUrl"
       width="600"
@@ -196,7 +197,7 @@
     ></iframe>
 
     <div class="action">
-      <button @click="home()">Back</button>
+      <button @click="home()">Zurück</button>
     </div>
   </main>
 
