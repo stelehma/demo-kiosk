@@ -63,7 +63,7 @@ const dataModel = {
   },
 
   call() {
-    const defaultNumber = '+14244320801';
+    const defaultNumber = '0801';
     const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
     location.href = `sip:${number}`;
   },
