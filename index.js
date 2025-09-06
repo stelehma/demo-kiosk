@@ -63,7 +63,7 @@ const dataModel = {
   },
 
   call() {
-    const defaultNumber = 'stelehma@cisco.com';
+    const defaultNumber = '+14244320801';
     const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
     location.href = `sip:${number}`;
   },
