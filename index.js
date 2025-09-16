@@ -25,6 +25,8 @@ const dataModel = {
   taxiNumber: '',
   mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2556.8654373410823!2d8.5536141777191!3d50.14494910931209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47bda76fb0a448fd%3A0x9d45e47a1f85ff18!2sCisco%20Systems%20GmbH!5e0!3m2!1sen!2sde!4v1757002364927!5m2!1sen!2sde',
 
+  xapiReady: false,
+
   init() {
     this.updateTimeAndDate();
     setInterval(() => this.updateTimeAndDate(), 30 * 1000);
@@ -39,11 +41,30 @@ const dataModel = {
         "beforeend",
         `<link rel="stylesheet" href="styles/theme-cisco.css" />`);
     }
+        this.waitForXapi();
     // quick jump to photo page for dev:
     // this.showPhotoPage();
     // this.name = 'Tore Bjolseth';
     // this.email = 'tbjolset@cisco.com';
     // this.currentHost = { displayName: 'Anna Gjerlaug' };
+  },
+  // wartet kurz, bis window.xapi von der WebView injiziert wurde
+  waitForXapi() {
+    const maxMs = 5000;
+    const step = 100;
+    const t0 = Date.now();
+    const tick = () => {
+      if (window.xapi && typeof window.xapi.Command?.Dial === 'function') {
+        this.xapiReady = true;
+        return;
+      }
+      if (Date.now() - t0 < maxMs) {
+        setTimeout(tick, step);
+      } else {
+        console.warn('xAPI not available in webview (fallback to sip: links).');
+      }
+    };
+    tick();
   },
 
   home() {
@@ -62,22 +83,26 @@ const dataModel = {
     clearInterval(this.photoTimer);
   },
 
-  call() {
-  const defaultNumber = '+14244320801';
-  const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
+    call() {
+    const defaultNumber = '+14244320801';
+    const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
 
-  // Versuche: sofort wählen via xAPI (kein Bestätigungsdialog)
-  if (window.xapi && typeof window.xapi.Command?.Dial === 'function') {
-    window.xapi.Command.Dial({
-      Number: number,
-      Protocol: 'Auto',   // oder 'Webex' – beides wählt ohne UI-Prompt
-      CallType: 'Audio'   // optional
-    }).catch(err => console.error('Dial failed:', err));
-    return;
-  }
+    if (this.xapiReady) {
+      window.xapi.Command.Dial({
+        Number: number,
+        Protocol: 'Auto',   // oder 'Webex'
+        CallType: 'Audio'   // optional
+      })
+      .then(() => console.log('Dialing', number))
+      .catch(err => {
+        console.error('xAPI Dial failed, falling back to sip:', err);
+        location.href = `sip:${number}`; // Fallback kann Call-Pane zeigen
+      });
+      return;
+    }
 
-  // Fallback: öffnet ggf. die Call-Pane (wenn xAPI-Bridge nicht verfügbar)
-  location.href = `sip:${number}`;
+    // Fallback: öffnet ggf. die Call-Pane (wenn xAPI nicht verfügbar)
+    location.href = `sip:${number}`;
   },
 
   get validForm() {
