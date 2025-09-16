@@ -63,9 +63,21 @@ const dataModel = {
   },
 
   call() {
-    const defaultNumber = '+14244320801';
-    const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
-    location.href = `sip:${number}`;
+  const defaultNumber = '+14244320801';
+  const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
+
+  // Versuche: sofort wählen via xAPI (kein Bestätigungsdialog)
+  if (window.xapi && typeof window.xapi.Command?.Dial === 'function') {
+    window.xapi.Command.Dial({
+      Number: number,
+      Protocol: 'Auto',   // oder 'Webex' – beides wählt ohne UI-Prompt
+      CallType: 'Audio'   // optional
+    }).catch(err => console.error('Dial failed:', err));
+    return;
+  }
+
+  // Fallback: öffnet ggf. die Call-Pane (wenn xAPI-Bridge nicht verfügbar)
+  location.href = `sip:${number}`;
   },
 
   get validForm() {
