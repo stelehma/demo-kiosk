@@ -84,7 +84,7 @@ const dataModel = {
   },
 
     call() {
-    const defaultNumber = '+14244320801';
+    const defaultNumber = '+14244320802';
     const number = new URLSearchParams(location.search).get('reception') || defaultNumber;
 
     if (this.xapiReady) {
