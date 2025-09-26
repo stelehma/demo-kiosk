@@ -29,17 +29,21 @@
     <h1>Herzlich Willkommen</h1>
     <div>Digitaler Besucher Anmeldekiosk</div>
     <div>Bitte wählen Sie eine Aktion.</div>
-    <form class="select-action" @submit.prevent="">
-      <div class="action">
-        <button @click="checkOut()" class="secondary">Abmelden</button>
-        <button @click="next()" class="primary">Anmelden</button>
-      </div>
-    </form>
-    <div class="mini-apps">
-      <button class="call" @click="call()">Anruf Info Bürgerservice</button>
-      <button class="taxi" @click="page = 'taxi'">Taxi bestellen</button>
-      <button class="map" @click="page = 'map'">Wo bin ich?</button>
-    </div>
+    
+    
+    <section class="hero-assistant">
+      <img src="./assets/assistant.png" alt="Digitaler Assistent" class="assistant-hero" />
+      <button class="btn-large call" @click="call()">Anruf Info Bürgerservice</button>
+    </section>
+
+    
+<div class="mini-apps">
+  <button class="taxi" @click="page = 'taxi'">Taxi bestellen</button>
+  <button class="map" @click="page = 'map'">Wo bin ich?</button>
+  <button class="logout" @click="checkOut()">Abmelden</button>
+  <button class="login" @click="next()">Anmelden</button>
+</div>
+
   </main>
   <main x-show="page === 'checkIn'">
     <h1>Anmelden</h1>

@@ -327,3 +327,114 @@ button.map {
   }
 }
 
+
+
+/* --- Hero Assistant Section --- */
+.hero-assistant {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: center;
+  gap: 1.5em;
+  padding: 1.5em;
+  margin: 1em auto 0.5em;
+  max-width: 960px;
+  background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+  border: 1px solid #e5ecff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(50, 90, 200, 0.08);
+}
+
+.assistant-hero {
+  width: 220px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.btn-large {
+  font-size: 1.2em;
+  padding: 1em 1.4em;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.mini-apps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75em;
+  margin-top: 0.5em;
+}
+
+.mini-apps button {
+  min-width: 12em;
+}
+
+/* Ensure the "call" button in hero shows assistant graphic if available */
+.hero-assistant .call {
+  background-image: url('../assets/assistant.png');
+  background-repeat: no-repeat;
+  background-size: 64px 64px;
+  background-position: 1em center;
+  padding-left: 5.5em;
+}
+
+
+/* --- Mini Apps with icons --- */
+.mini-apps .taxi {
+  background-image: url('../assets/taxi.png');
+  background-repeat: no-repeat;
+  background-position: center 1em;
+  background-size: 64px 64px;
+}
+
+.mini-apps .map {
+  background-image: url('../assets/map.png');
+  background-repeat: no-repeat;
+  background-position: center 1em;
+  background-size: 64px 64px;
+}
+
+.mini-apps .logout {
+  background-image: url('../assets/logout.png');
+  background-repeat: no-repeat;
+  background-position: center 1em;
+  background-size: 64px 64px;
+}
+
+.mini-apps .login {
+  background-image: url('../assets/login.png');
+  background-repeat: no-repeat;
+  background-position: center 1em;
+  background-size: 64px 64px;
+}
+
+.mini-apps button {
+  padding-top: 6em; /* space for icon above text */
+}
+
+
+/* --- Mini Apps Button Colors --- */
+.mini-apps .taxi {
+  background-color: #FFD54F;
+  border-color: #e0a800;
+}
+
+.mini-apps .map {
+  background-color: #64B5F6;
+  border-color: #1565C0;
+  color: white;
+}
+
+.mini-apps .logout {
+  background-color: #EF5350;
+  border-color: #B71C1C;
+  color: white;
+}
+
+.mini-apps .login {
+  background-color: #66BB6A;
+  border-color: #1B5E20;
+  color: white;
+}
